@@ -1,7 +1,7 @@
 'use client';
 
+import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import PayPalButton from '../components/PayPalButton';
 
 interface Package {
@@ -11,7 +11,7 @@ interface Package {
   price: number;
 }
 
-export default function CheckoutPage() {
+function CheckoutPage() {
   const searchParams = useSearchParams();
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
 
@@ -42,5 +42,13 @@ export default function CheckoutPage() {
         <PayPalButton amount={selectedPackage.price.toString()} />
       </div>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutPage />
+    </Suspense>
   );
 }
